@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ahmed Ramadan | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root{
+  --primary: #00ff88; 
+  --secondary: #00e5ff; 
+  --bg-deep: #050810;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #e2e8f0;
+  --glass: rgba(255,255,255,0.08);
+  --purple: #00ff88;
+  --gold: #00e5ff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Space Grotesk',sans-serif}
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-deep);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(0, 255, 136, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(0, 229, 255, 0.03) 0%, transparent 40%);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* --- CANVAS BACKGROUND --- */
+#canvas-bg { position: fixed; top: 0; left: 0; z-index: -1; }
+
+/* --- TOP BAR --- */
+.top-bar {
+  position: fixed; top: 0; width: 100%; height: 70px;
+  background: rgba(5, 8, 16, 0.85); backdrop-filter: blur(15px);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 10%; border-bottom: 1px solid var(--border); z-index: 1000;
+}
+.top-links { display: flex; gap: 30px; }
+.top-links a { text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; transition: 0.3s; letter-spacing: 1px;}
+.top-links a:hover { color: var(--primary); }
+
+/* --- HERO --- */
+.hero {
+  min-height: 100vh; display: grid; grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px; align-items: center; padding: 120px 10% 80px;
+}
+.hero-content h1 { font-size: clamp(40px, 6vw, 70px); line-height: 1.1; margin-bottom: 20px; }
+.hero-content h3 {opacity:.85; margin:12px 0 18px}
+.badge{
+  display:inline-block; padding:10px 22px; border-radius:999px;
+  background: linear-gradient(90deg, rgba(0,255,136,.2), rgba(0,229,255,.15));
+  border:1px solid rgba(0,255,136,.5);
+}
+.whatsapp-hero {
+  display: inline-block; padding: 16px 38px; border-radius: 4px;
+  background: var(--primary); color: var(--bg-deep);
+  text-decoration: none; font-weight: 700; transition: 0.4s; margin-top: 25px;
+}
+.whatsapp-hero:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0, 255, 136, 0.3); }
+.hero-left .photo-container{
+  position: relative;
+  display: inline-block;
+  width:100%; max-width:360px;
+}
+.hero-left .photo-container img.profile{
+  width:100%; border-radius:22px;
+  box-shadow: 0 20px 80px rgba(0,255,136,.45);
+  transition: transform .4s ease;
+}
+.hero-left .photo-container img.profile:hover{ transform: perspective(800px) rotateY(6deg) rotateX(4deg) scale(1.03) }
+
+/* --- SECTIONS --- */
+.section{ padding:100px 10%; position:relative; z-index:1 }
+.section-title{ font-size: clamp(28px, 4vw, 40px); margin-bottom:46px; text-align:center }
+
+/* --- SKILLS SECTION & ICON ANIMATIONS --- */
+.skills-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+  gap: 25px; 
+}
+
+.skill-card {
+  background: var(--bg-card); 
+  border: 1px solid var(--border);
+  padding: 35px 20px; 
+  border-radius: 18px; 
+  text-align: center; 
+  transition: all 0.5s ease;
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Reveal Animation */
+.skill-card.reveal {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Glow Pulse */
+@keyframes glowPulse {
+  0% { filter: drop-shadow(0 0 5px rgba(0,255,136,0.2)); }
+  50% { filter: drop-shadow(0 0 20px rgba(0,255,136,0.7)); }
+  100% { filter: drop-shadow(0 0 5px rgba(0,255,136,0.2)); }
+}
+
+.skill-card img { 
+  width: 55px; 
+  height: 55px;
+  object-fit: contain;
+  margin-bottom: 15px; 
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Hover Effects */
+.skill-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--primary);
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.skill-card:hover img {
+  transform: scale(1.2) rotateY(360deg);
+  animation: glowPulse 1.5s infinite;
+}
+
+.skill-card div {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.skill-card:hover div { 
+  opacity: 1; 
+  color: var(--primary); 
+}
+
+/* --- PROJECTS --- */
+.project-display { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.p-card {
+  position: relative; overflow: hidden; border-radius: 12px; 
+  background: var(--bg-card); border: 1px solid var(--border);
+  transition: 0.4s;
+}
+.video-wrapper {
+  position: relative;
+  padding-bottom: 177.78%; /* 9:16 aspect ratio for vertical reels */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+.p-card video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.6s;
+}
+.p-card img { width: 100%; height: auto; object-fit: cover; transition: 0.6s; }
+.p-card:hover { border-color: var(--primary); }
+.p-card:hover video, .p-card:hover img { transform: scale(1.05); }
+.p-card .overlay{
+  position:absolute; inset:auto 0 0 0; padding:16px 18px;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,.75));
+  color: #fff; font-weight: 600;
+}
+
+/* --- COMPANIES --- */
+.company-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+.comp-card { 
+  background: var(--bg-card); padding: 45px; border: 1px solid var(--border); 
+  border-radius: 20px; transition: 0.4s; 
+}
+.comp-card:hover { border-color: var(--secondary); transform: scale(1.02); }
+
+.stat-row { display: flex; justify-content: space-between; margin-top: 30px; }
+.stat-row span { display: block; font-size: 28px; font-weight: 700; color: var(--primary); }
+
+/* Typing cursor */
+.cursor{ display:inline-block; width:10px; background:var(--text); margin-left:6px; animation: blink 1s steps(1) infinite }
+@keyframes blink{ 50%{opacity:0} }
+
+.company-logo{
+  width:120px;
+  height:120px;
+  object-fit:contain;
+  margin-bottom:20px;
+  filter: drop-shadow(0 8px 20px rgba(0,255,136,.5));
+}
+
+.stats small{
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.yt-link{
+  display:inline-block;
+  margin-top:16px;
+  padding:10px 18px;
+  border-radius:25px;
+  background:rgba(255,0,0,.15);
+  border:1px solid rgba(255,0,0,.4);
+  color:#ff4b4b;
+  text-decoration:none;
+  font-weight:600;
+  transition:.3s ease;
+}
+
+.yt-link:hover{
+  background:#ff0000;
+  color:#fff;
+  box-shadow:0 10px 30px rgba(255,0,0,.4);
+}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+
+.about-img{
+  position:relative;
+  text-align:center;
+}
+
+.about-img .photo-container{
+  position: relative;
+  display: inline-block;
+}
+
+.about-img img.profile{
+  width:320px;
+  border-radius:50%;
+  box-shadow:0 0 80px rgba(0,255,136,.4);
+}
+
+.years-box{
+  position:absolute;
+  bottom:20px;
+  right:40px;
+  padding:20px 30px;
+  border-radius:20px;
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(12px);
+}
+
+.years-box span{
+  font-size:32px;
+  font-weight:800;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.about-features div{
+  margin-top:20px;
+}
+
+.service-btn{
+  display:block;
+  margin:20px auto 0;
+  padding:12px 28px;
+  text-align:center;
+  border-radius:4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color:var(--bg-deep);
+  font-weight:700;
+  text-decoration:none;
+  transition: .3s ease;
+  box-shadow: 0 10px 30px rgba(0,255,136,.35);
+}
+.service-btn:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0,255,136,.45);
+}
+.services-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+  justify-items:center;
+}
+
+.service-card{
+  background: var(--bg-card);
+  border-radius:18px;
+  padding:30px 24px;
+  max-width:320px;
+  transition:.35s ease;
+  text-align:center;
+  border:1px solid var(--border);
+}
+
+.service-card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0,255,136,.35);
+  background: linear-gradient(180deg, rgba(0,255,136,.08), rgba(255,255,255,.05));
+}
+
+.service-icon{
+  font-size:36px;
+  margin-bottom:18px;
+}
+
+.service-card h3{
+  font-size:20px;
+  margin-bottom:10px;
+  font-weight:700;
+}
+
+.service-card p{
+  font-size:14px;
+  opacity:.8;
+  line-height:1.5;
+}
+.contact-cta {
+  text-align:center;
+  background: rgba(5, 8, 16, 0.85);
+  padding:80px 10%;
+  border-radius:20px;
+  margin:60px 0;
+}
+
+.contact-cta p{
+  opacity:.7;
+  font-size:16px;
+  margin-bottom:30px;
+}
+
+.cta-btn{
+  display:inline-block;
+  padding:14px 32px;
+  border-radius:4px;
+  background: linear-gradient(90deg,var(--primary),var(--secondary));
+  color:var(--bg-deep);
+  font-weight:700;
+  text-decoration:none;
+  transition:.3s ease;
+}
+
+.cta-btn:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0,255,136,.45);
+}
+
+.social-icons{
+  margin-top:40px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.social-icons a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  background: rgba(255,255,255,0.05);
+  border-radius:50%;
+  text-decoration:none;
+  font-size:20px;
+  color:#fff;
+  transition:.3s ease;
+}
+
+.social-icons a:hover{
+  background: linear-gradient(90deg,var(--primary),var(--secondary));
+  color:#fff;
+  transform: translateY(-4px);
+}
+
+.companies {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.comp-card .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.comp-card .social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  font-size: 26px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.comp-card .social-icon::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: rgba(255,255,255,0.08);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+  border-radius: 50%;
+}
+
+.comp-card .social-icon:hover::after {
+  top: -20%;
+  left: -20%;
+}
+
+.comp-card .social-icon:hover {
+  transform: translateY(-6px) scale(1.15);
+  box-shadow: 0 18px 50px rgba(0,255,136,.45);
+}
+
+/* Brand colors */
+.comp-card .social-icon.tiktok:hover { background:#000; color:#fff; }
+.comp-card .social-icon.youtube:hover { background:#ff0000; color:#fff; }
+.comp-card .social-icon.instagram:hover { background:#e1306c; color:#fff; }
+.comp-card .social-icon.facebook:hover { background:#1877f2; color:#fff; }
+
+.behance-card{
+  position: relative;
+  display: block;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border:1px solid var(--border);
+}
+
+.behance-card img{
+  width: 100%;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.behance-card .overlay{
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 16px;
+  text-align: center;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,.75));
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.behance-card:hover{
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 60px rgba(0,255,136,.35);
+}
+
+.behance-card:hover img{
+  transform: scale(1.08);
+}
+
+#behance .portfolio{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap:26px;
+  opacity:0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+#behance .portfolio.show{
+  opacity:1;
+  transform: translateY(0);
+}
+
+.design-filters{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin-bottom:32px;
+  flex-wrap:wrap;
+}
+
+.filter-btn{
+  padding:10px 22px;
+  border-radius:25px;
+  border:none;
+  background: rgba(255,255,255,.05);
+  color:#fff;
+  cursor:pointer;
+  font-weight:600;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active{
+  background: linear-gradient(90deg,var(--primary),var(--secondary));
+  box-shadow: 0 10px 30px rgba(0,255,136,.35);
+  color:#fff;
+}
+
+.graphic-portfolio{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap:26px;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.logo-white{
+  color:#fff;
+}
+
+.logo-blue{
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 28px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: var(--bg-deep);
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0,255,136,.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255,255,255,0.1);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+
+.project-btn:hover::before {
+  top: -20%;
+  left: -20%;
+}
+
+.project-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0,255,136,.45);
+}
+
+.certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 26px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.certificates-grid.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cert-card {
+  background: var(--bg-card);
+  border-radius: 18px;
+  padding: 30px 24px;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cert-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  transition: transform 0.5s ease;
+}
+
+.cert-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.cert-card p {
+  font-size: 14px;
+  opacity: 0.8;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.cert-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 60px rgba(0,255,136,.35);
+  background: linear-gradient(180deg, rgba(0,255,136,.08), rgba(255,255,255,.05));
+}
+
+.cert-card:hover img {
+  transform: scale(1.08);
+}
+
+.view-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: var(--bg-deep);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0,255,136,.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.view-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255,255,255,0.1);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+
+.view-btn:hover::before {
+  top: -20%;
+  left: -20%;
+}
+
+.view-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0,255,136,.45);
+}
+
+.cv-section {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.cv-section h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.download-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: var(--bg-deep);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0,255,136,.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.download-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255,255,255,0.1);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+
+.download-btn:hover::before {
+  top: -20%;
+  left: -20%;
+}
+
+.download-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0,255,136,.45);
+}
+
+/* Floating logos animation */
+.floating-logo {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+  filter: drop-shadow(0 4px 10px rgba(0,255,136,.4));
+}
+
+.floating-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.logo-csharp {
+  top: 10%;
+  left: -50px;
+  animation: float-vertical 5s ease-in-out infinite;
+}
+
+.logo-dotnet {
+  top: 40%;
+  right: -50px;
+  animation: float-vertical 6s ease-in-out infinite 1s;
+}
+
+.logo-photoshop {
+  bottom: 20%;
+  left: -40px;
+  animation: float-horizontal 4s ease-in-out infinite 0.5s;
+}
+
+.logo-canva {
+  bottom: 10%;
+  right: -60px;
+  animation: float-horizontal 7s ease-in-out infinite 2s;
+}
+
+@keyframes float-vertical {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes float-horizontal {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-10px); }
+}
+
+footer { text-align: center; padding: 60px; border-top: 1px solid var(--border); opacity: 0.5; font-size: 12px; }
+
+/* Smaller WhatsApp button */
+.whatsapp-hero.small {
+  padding: 8px 18px;
+  font-size: 12px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr 1fr; padding: 100px 8% 60px; gap: 30px; }
+  .hero-content h1 { font-size: clamp(35px, 5vw, 60px); }
+  .section { padding: 80px 8%; }
+  .section-title { font-size: clamp(26px, 3.5vw, 36px); }
+  .skills-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px; }
+  .project-display { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+  .company-container { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+  .services-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .about-grid { gap: 50px; }
+  .about-img img.profile { width: 280px; }
+  .video-wrapper { padding-bottom: 177.78%; } /* Maintain aspect ratio */
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .floating-logo { display: none; }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    padding: 0 5%;
+    flex-direction: column;
+    height: auto;
+    align-items: flex-start;
+  }
+  .top-links {
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0;
+    width: 100%;
+  }
+  .top-right {
+    margin-bottom: 10px;
+  }
+  .hero {
+    padding: 100px 5% 60px;
+    gap: 30px;
+  }
+  .hero-content h1 {
+    font-size: 40px;
+  }
+  .hero-left .photo-container {
+    max-width: 100%;
+  }
+  .section {
+    padding: 80px 5%;
+  }
+  .section-title {
+    font-size: 28px;
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .about-img img.profile {
+    width: 100%;
+    max-width: 280px;
+  }
+  .years-box {
+    position: static;
+    margin-top: 20px;
+  }
+  .services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .service-card {
+    max-width: 100%;
+    padding: 25px 20px;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px;
+  }
+  .skill-card {
+    padding: 25px 15px;
+  }
+  .skill-card img {
+    width: 45px;
+    height: 45px;
+  }
+  .project-display {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  .company-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+  .comp-card {
+    padding: 35px 25px;
+  }
+  .company-logo {
+    width: 100px;
+    height: 100px;
+  }
+  .stat-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  .stat-row div {
+    text-align: center;
+  }
+  .stat-row span {
+    font-size: 24px;
+  }
+  .contact-cta {
+    padding: 60px 5%;
+  }
+  .social-icons {
+    gap: 15px;
+  }
+  .social-icons a {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+  .comp-card .social-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+  }
+  .design-filters {
+    gap: 10px;
+  }
+  .filter-btn {
+    padding: 8px 18px;
+    font-size: 14px;
+  }
+  .graphic-portfolio {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .cv-section h3 {
+    font-size: 20px;
+  }
+  .download-btn {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+  footer {
+    padding: 40px 5%;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-bar {
+    padding: 0 3%;
+  }
+  .top-links a {
+    font-size: 12px;
+  }
+  .whatsapp-hero {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+  .whatsapp-hero.small {
+    padding: 6px 14px;
+    font-size: 10px;
+  }
+  .hero {
+    padding: 80px 3% 50px;
+  }
+  .hero-content h1 {
+    font-size: 32px;
+  }
+  .hero-content h3 {
+    font-size: 18px;
+  }
+  .badge {
+    padding: 8px 18px;
+    font-size: 12px;
+  }
+  .section {
+    padding: 60px 3%;
+  }
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  .about-content p {
+    font-size: 14px;
+  }
+  .about-features div p {
+    font-size: 13px;
+  }
+  .service-icon {
+    font-size: 30px;
+  }
+  .service-card h3 {
+    font-size: 18px;
+  }
+  .service-card p {
+    font-size: 13px;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+  }
+  .skill-card img {
+    width: 40px;
+    height: 40px;
+  }
+  .skill-card div {
+    font-size: 12px;
+  }
+  .project-display {
+    grid-template-columns: 1fr;
+  }
+  .company-container {
+    grid-template-columns: 1fr;
+  }
+  .comp-card {
+    padding: 30px 20px;
+  }
+  .stat-row span {
+    font-size: 22px;
+  }
+  .contact-cta {
+    padding: 50px 3%;
+  }
+  .contact-cta h2 {
+    font-size: 24px;
+  }
+  .contact-cta p {
+    font-size: 14px;
+  }
+  .cta-btn {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+  .social-icons {
+    gap: 10px;
+  }
+  .social-icons a {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+  .comp-card .social-icons {
+    gap: 12px;
+  }
+  .comp-card .social-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+  .graphic-portfolio {
+    grid-template-columns: 1fr;
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+  .cv-section {
+    margin-top: 40px;
+  }
+  .cv-section h3 {
+    font-size: 18px;
+  }
+  .download-btn {
+    padding: 10px 24px;
+    font-size: 13px;
+  }
+  footer {
+    padding: 30px 3%;
+    font-size: 10px;
+  }
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas-bg"></canvas>
+
+<div class="top-bar">
+    <div class="logo">
+    <span class="logo-white">AR</span><span class="logo-blue">Editor</span>
+   </div>
+  <div class="top-links">
+    <a href="#about">about</a>
+    <a href="#Projects">Projects</a>
+    <a href="#companies-section">Companies</a>
+    <a href="#Skills">Skills</a>
+    <a href="#CV">CV</a>
+  </div>
+
+  <div class="top-right">
+    <a href="https://wa.me/201285933140" target="_blank" class="whatsapp-hero small">
+      💬 WhatsApp
+    </a>
+  </div>
+</div>
+
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 id="type"></h1><span class="cursor"></span>
+    <h3>Video Editor and social managment </h3>
+    <span class="badge">3+ Years Experience</span>
+    <a class="whatsapp-hero" href="https://wa.me/201285933140">Chat on WhatsApp</a>
+  </div>
+  <div class="hero-left">
+    <div class="photo-container">
+      <img class="profile" src="Images/me.jpeg" alt="Ahmed Ramadan">
+      <div class="floating-logo logo-csharp"><img src="Images/c.png" alt="Capcut"></div>
+      <div class="floating-logo logo-dotnet"><img src="Images/p.png" alt="Premire"></div>
+      <div class="floating-logo logo-photoshop"><img src="Images/ae.png" alt="After Effect"></div>
+    </div>
+    <a href="#services" class="service-btn">See My Services</a>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="about-grid">
+    <div class="about-img">
+      <div class="photo-container">
+        <img class="profile" src="Images/me.jpeg" alt="Ahmed Ramadan">
+        <div class="floating-logo logo-csharp"><img src="Images/c.png" alt="Capcut"></div>
+        <div class="floating-logo logo-dotnet"><img src="Images/p.png" alt="Premire"></div>
+        <div class="floating-logo logo-photoshop"><img src="Images/ae.png" alt="After Effect"></div>
+      </div>
+      <div class="years-box">
+        <span>3+</span>
+        <small>Years of Innovation</small>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <h2 class="section-title">what I offer</h2>
+      <p>
+        At <strong>Ahmed Ramadan</strong>, I transform raw footage into captivating visual narratives. I craft dynamic,
+         high-quality videos that engage your audience, set the right mood, and elevate your brand's story.
+      </p>
+
+      <div class="about-features">
+        <div>
+          🚀 <strong>Fast-Paced Delivery</strong>
+          <p>I deliver polished, high-impact edits with speed and precision to meet your deadlines without compromising quality..</p>
+        </div>
+
+        <div>
+          🎬 <strong>Compelling Storytelling</strong>
+          <p>Every cut, transition, and color grade is deliberately designed to hold attention, evoke emotion, and drive your message home..</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="services" class="section">
+  <h2 class="section-title">Our Professions</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🎬</div>
+      <h3>Video editing</h3>
+      <p>Crafting raw footage into seamless, engaging stories with dynamic pacing and rhythm tailored to your platform..</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <h3>Post-Production</h3>
+      <p>Elevating your visuals with professional color grading, immersive sound design, and striking motion graphics..</p>
+    </div>
+  </div>
+</section>
+  
+<h3 class="section-title">Skills</h3>
+<section id="skills" class="section">
+    <div class="skill-card"><img src="Images/c.png"/><div>Capcut</div></div>
+    <div class="skill-card"><img src="Images/p.png"/><div>Adobe Premire</div></div>
+    <div class="skill-card"><img src="Images/ae.png"/><div>After Effect</div></div>
+    <div class="skill-card"><img src="Images/s.png"/><div>Social Management</div></div>
+    </div>
+</section>
+
+<section id="Projects" class="section">
+  <h2 class="section-title">My Projects</h2>
+  <div class="design-filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="social">Social Reels Videos</button>
+    <button class="filter-btn" data-filter="education">Education Reels</button>
+  </div>
+  <div class="project-display graphic-portfolio">
+    <!-- Social Reels -->
+    <div class="p-card" data-category="social">
+      <div class="video-wrapper">
+        <video controls>
+          <source src="Images/social2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="overlay">Social Reel</div>
+    </div>
+        <div class="p-card" data-category="social">
+      <div class="video-wrapper">
+        <video controls>
+          <source src="Images/social3.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="overlay">Social Reel</div>
+    </div>
+
+    <!-- Education Reels -->
+    <div class="p-card" data-category="education">
+      <div class="video-wrapper">
+        <video controls>
+          <source src="Images/ed1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="overlay">Education Reel</div>
+    </div>
+    <div class="p-card" data-category="education">
+      <div class="video-wrapper">
+        <video controls>
+          <source src="Images/ed2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="overlay">Education Reel</div>
+    </div>
+        <div class="p-card" data-category="education">
+      <div class="video-wrapper">
+        <video controls>
+          <source src="Images/ed3.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="overlay">Education Reel</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="companies-section" class="section">
+  <h2 class="section-title">My Companies</h2>
+  <div class="company-container">
+    
+    <!-- Trio Coders -->
+    <div class="comp-card">
+      <img src="Images/trio.png" alt="Trio Coders Logo" class="company-logo">
+      <h3>Trio Coders</h3>
+      <p>Backend systems, APIs, scalable solutions. , UI Web , FrontEnd systems , React Framework</p>
+
+      <div class="stat-row">
+        <div><span class="count" data-target="25">0</span><small>Projects</small></div>
+        <div><span class="count" data-target="12">0</span><small>Clients</small></div>
+        <div><span class="count" data-target="3">0</span><small>Years</small></div>
+      </div>
+
+      <div class="social-icons">
+        <a href="https://www.tiktok.com/@triocoders.arabic" target="_blank" class="social-icon tiktok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.youtube.com/@TrioCoders" target="_blank" class="social-icon youtube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://www.instagram.com/triocoders.arabic" target="_blank" class="social-icon instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/people/TrioCoders/61582095599368/?rdid=zd3EHWw3yUZFibmJ&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19yFZyRPkK%2F" target="_blank" class="social-icon facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tpixel -->
+    <div class="comp-card">
+      <img src="Images/tpixel.png" alt="Tpixel Logo" class="company-logo">
+      <h3>Tpixel</h3>
+      <p>Branding, thumbnails, cinematic visuals.</p>
+
+      <div class="stat-row">
+        <div><span class="count" data-target="40">0</span><small>Designs</small></div>
+        <div><span class="count" data-target="20">0</span><small>Brands</small></div>
+        <div><span class="count" data-target="3">0</span><small>Years</small></div>
+      </div>
+
+      <div class="social-icons">
+        <a href="https://www.youtube.com/@TpixelGroup?app=desktop&fbclid=IwVERDUAP8vi5leHRuA2FlbQIxMABzcnRjBmFwcF9pZAwzNTA2ODU1MzE3MjgAAR7Mf8zkMIMAGrvfPLdqXeCKHg5z2fmxWmAjICUz6mFmLu1kQ0NI69hKxXjsQA_aem_46l5Gi7HMiEZm1FOhhxQNw" target="_blank" class="social-icon youtube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://www.instagram.com/tpixel_group?igsh=MTkzeGJwbTE0OWNoOA%3D%3D" target="_blank" class="social-icon instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/people/TPixel-Group/61588079044348/?rdid=V8etE34fvLxoLJAm&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1PNjL1WrSr%2F" target="_blank" class="social-icon facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="CV" class="section">
+  <div class="cv-section">
+    <h3>My Curriculum Vitae</h3>
+    <a href="Images/cv.jpg" download class="download-btn">Download CV</a>
+  </div>
+</section>
+
+<section id="contact" class="section contact-cta">
+  <h2>Let's Build Something Great</h2>
+  <p>We're currently available for new projects. Let's chat!</p>
+  <p>Programmed By : Omar Mostafa & Designed By : MK.</p>
+  <a href="https://wa.me/201285933140" class="cta-btn" target="_blank">Get In Touch ↗</a>
+
+  <div class="social-icons">
+    <a href="mailto:mohamedkhaledfap2@email.com" target="_blank">✉️</a>
+    <a href="https://wa.me/201285933140" target="_blank">💬</a>
+    <a href="https://youtube.com/@triocoders" target="_blank">▶️</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Ahmed Ramadan . All right reserved</p>
+</footer>
+
+<script>
+/* --- TYPEWRITER --- */
+const texts = ["Ahmed Ramadan", "Editor", "Social Mangament"];
+let textIdx = 0, charIdx = 0, isDeleting = false;
+const typeEl = document.getElementById("type");
+
+function type() {
+  const current = texts[textIdx];
+  let speed;
+
+  if (isDeleting) {
+    if (charIdx > 0) {
+      typeEl.textContent = current.substring(0, --charIdx);
+      speed = 40;
+    } else {
+      isDeleting = false;
+      textIdx = (textIdx + 1) % texts.length;
+      speed = 500;
+    }
+  } else {
+    if (charIdx < current.length) {
+      typeEl.textContent = current.substring(0, ++charIdx);
+      speed = 100;
+    } else {
+      isDeleting = true;
+      speed = 2500;
+    }
+  }
+
+  setTimeout(type, speed);
+}
+type();
+
+/* --- STAGGERED SKILLS REVEAL --- */
+const skillCards = document.querySelectorAll('.skill-card');
+const revealSkills = () => {
+  skillCards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.add('reveal');
+    }, index * 120);
+  });
+};
+
+/* --- STAT COUNTER --- */
+function startCounters() {
+  const counters = document.querySelectorAll('.count');
+  counters.forEach(c => {
+    const target = +c.getAttribute('data-target');
+    const update = () => {
+      const count = +c.innerText;
+      if(count < target) {
+        c.innerText = Math.ceil(count + (target/50));
+        setTimeout(update, 25);
+      } else { c.innerText = target; }
+    };
+    update();
+  });
+}
+
+/* --- OBSERVER FOR ANIMATIONS --- */
+const skillsObserver = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting) {
+    revealSkills();
+  }
+}, {threshold: 0.15});
+skillsObserver.observe(document.getElementById('skills'));
+
+const companiesObserver = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting) {
+    startCounters();
+  }
+}, {threshold: 0.15});
+companiesObserver.observe(document.getElementById('companies-section'));
+
+/* --- SUBTLE CANVAS BACKGROUND --- */
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let dots = [];
+for(let i=0; i<40; i++) {
+  dots.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3 });
+}
+function draw() {
+  ctx.clearRect(0,0,canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(0, 255, 136, 0.1)";
+  dots.forEach(d => {
+    d.x += d.vx; d.y += d.vy;
+    if(d.x < 0 || d.x > canvas.width) d.vx *= -1;
+    if(d.y < 0 || d.y > canvas.height) d.vy *= -1;
+    ctx.beginPath(); ctx.arc(d.x, d.y, 1, 0, Math.PI*2); ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+/* --- MAGNETIC ICON EFFECT --- */
+document.querySelectorAll(".skill-card, .p-card, .comp-card, .cert-card, .service-card, .behance-card").forEach(card => {
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const moveX = (x - centerX) / 15;
+    const moveY = (y - centerY) / 15;
+
+    card.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "";
+  });
+});
+
+/* 3D tilt on cards */
+document.querySelectorAll('.p-card').forEach(card=>{
+  card.addEventListener('mousemove', (e)=>{
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width/2;
+    const y = e.clientY - r.top  - r.height/2;
+    card.style.transform = `translateY(-8px) rotateX(${(-y/20)}deg) rotateY(${(x/20)}deg)`;
+  });
+  card.addEventListener('mouseleave', ()=>{
+    card.style.transform = '';
+  });
+});
+
+const behancePortfolio = document.querySelector('#behance .portfolio');
+
+window.addEventListener('scroll', ()=>{
+  const pos = behancePortfolio.getBoundingClientRect().top;
+  if(pos < window.innerHeight){
+    behancePortfolio.classList.add('show');
+  }
+});
+const filterBtns = document.querySelectorAll('.filter-btn');
+const graphicCards = document.querySelectorAll('.graphic-portfolio .p-card');
+
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const filter = btn.getAttribute('data-filter');
+
+    graphicCards.forEach(card=>{
+      if(filter === 'all' || card.getAttribute('data-category') === filter){
+        card.style.display = 'block';
+        setTimeout(()=>card.style.opacity = '1', 50);
+      } else{
+        card.style.opacity = '0';
+        setTimeout(()=>card.style.display = 'none', 300);
+      }
+    });
+  });
+});
+
+const certificatesGrid = document.querySelector('.certificates-grid');
+window.addEventListener('scroll', () => {
+  const pos = certificatesGrid.getBoundingClientRect().top;
+  if (pos < window.innerHeight) {
+    certificatesGrid.classList.add('show');
+  }
+});
+</script>
+
+</body>
+</html>
